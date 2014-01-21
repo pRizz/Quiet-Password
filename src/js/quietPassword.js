@@ -77,7 +77,18 @@ $(function(){
 				console.log("$passwordField.val(): " + $passwordField.val());
 			}, 3000, $passwordField);	
 		}
-			
+		
+		// fix for accounts.google.com
+		if(window.location.host && window.location.host.match(/google/)){
+			setTimeout(function($passwordField, $passwordFieldClone){
+				// resize
+				$passwordFieldClone.width($passwordField.width());
+				// reposition
+				$passwordFieldClone.position({
+					of: $passwordField
+				});
+			}, 10, $passwordField, $passwordFieldClone);
+		}
 	}
 	
 	// add tooltip

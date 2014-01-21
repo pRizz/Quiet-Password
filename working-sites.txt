@@ -1,4 +1,7 @@
 confirmed working websites:
 https://www.tcfbank.com/
 https://www.citi.com/credit-cards/
+https://www.chase.com/
 https://www.ventrachicago.com/
+https://accounts.google.com/
+...
