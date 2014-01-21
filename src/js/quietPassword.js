@@ -1,7 +1,7 @@
 // main.js
 
 $(function(){
-	var debugMode = true;
+	var debugMode = false;
 	
 	var passwordFieldEmptyColor = "#FFC090"; // light orange
 	var passwordFieldNonEmptyColor = "#BBFFBB"; // light green
@@ -18,8 +18,9 @@ $(function(){
 			position: "absolute", // don't affect other divs
 			"background-color": passwordFieldEmptyColor,
 		})
-		.attr("id", $passwordField.attr("id") + i);
-		$passwordFieldClone.attr("placeholder", placeholderText);
+		.attr("id", $passwordField.attr("id") + i)
+		.attr("name", $passwordField.attr("name") + i)
+		.attr("placeholder", placeholderText);
 		
 		// insert clone right after the password field in DOM
 		$passwordField.after($passwordFieldClone);
