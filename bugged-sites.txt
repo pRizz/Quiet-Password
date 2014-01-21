@@ -1,1 +1,2 @@
 confirmed bugged websites:
+https://accounts.google.com/ - Password field takes up width of window
