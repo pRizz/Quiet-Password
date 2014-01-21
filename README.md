@@ -5,7 +5,7 @@ Description
 --------------------------------
 Quiet Password is a Chrome extension that makes password fields not echo any characters. Feel more at ease
 when typing in passwords. This extension is aimed at security buffs, people doing computer presentations
-and demos, and the paranoid. :)
+and demos, and the paranoid. :-)
 
 Usage
 --------------------------------
