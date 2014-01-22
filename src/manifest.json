@@ -1,8 +1,13 @@
 {
     "name": "Quiet Password",
+	"author": "Peter Ryszkiewicz",
     "description": "This extension covers password fields so nosy folks can't see how many characters are typed in.",
-    "version": "0.1",
+    "default_locale": "en",
+	"version": "0.1",
     "icons": {
+		"16": "icon16.png",
+		"48": "icon48.png",
+		"128": "icon128.png",
     },
     "background": {
 /*        "scripts": ["background.js"]*/
