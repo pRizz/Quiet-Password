@@ -1,0 +1,6 @@
+gimp canvas size settings:
+
+width: 500
+height: 680
+offset x: -470
+offset y: -100

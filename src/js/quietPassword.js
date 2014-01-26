@@ -43,19 +43,23 @@ $(function(){
 	var placeholderText = "Password";
 	
 	var $passwordFields = $("input[type='password']");
-	for(var i = 0; i < $passwordFields.length; i++){
-		var $passwordField = $($passwordFields[i]);
+	if($passwordFields.length > 0){
 		// make placeholder color dark gray
 		$("head").append("<style>::-webkit-input-placeholder{color: #666}</style>");
+	}
+
+	for(var i = 0; i < $passwordFields.length; i++){
+		var $passwordField = $($passwordFields[i]);
 		var $passwordFieldClone = $passwordField.clone()
-		.css(css($passwordField)) // get all styling of original, like id styling that gets missed
-		.css({
-			position: "absolute", // don't affect other divs
-			"background-color": passwordFieldEmptyColor,
-		})
-		.attr("id", $passwordField.attr("id") + i)
-		.attr("name", $passwordField.attr("name") + i)
-		.attr("placeholder", placeholderText);
+			.css(css($passwordField)) // get all styling of original, like id styling that gets missed
+			.css({
+				position: "absolute", // don't affect other divs
+				"background-color": $passwordField.val() ? passwordFieldNonEmptyColor : passwordFieldEmptyColor,
+			})
+			.attr("id", $passwordField.attr("id") + i)
+			.attr("name", $passwordField.attr("name") + i)
+			.attr("placeholder", $passwordField.val() ? "" : placeholderText)
+			.val("");
 		
 		// insert clone right after the password field in DOM
 		$passwordField.after($passwordFieldClone);
@@ -87,11 +91,12 @@ $(function(){
 			evt.data.$passwordField.focus(); // delegate the focus
 		});
 		
-		$passwordField.on("keyup", {
+		$passwordField.on("keyup change", {
 			"$passwordField": $passwordField,
 			"$passwordFieldClone": $passwordFieldClone
 		}, function(evt){
 			if(debugMode){
+				console.log("evt, ", evt);
 				console.log("passwordField changed");
 				console.log("$passwordField.val(): " + evt.data.$passwordField.val());
 				console.log("$passwordField.val().length: " + evt.data.$passwordField.val().length);
@@ -113,17 +118,30 @@ $(function(){
 			}, 3000, $passwordField);	
 		}
 		
-		// fix for accounts.google.com
-		if(window.location.host && window.location.host.match(/google/)){
-			setTimeout(function($passwordField, $passwordFieldClone){
-				// resize
-				$passwordFieldClone.width($passwordField.width());
-				// reposition
-				$passwordFieldClone.position({
-					of: $passwordField
+		// rechecks the original password field for changes and adjusts the password cover
+		var checkPasswordField = function($passwordField, $passwordFieldClone){
+			// resize
+			$passwordFieldClone.width($passwordField.width());
+			// reposition
+			$passwordFieldClone.position({
+				of: $passwordField
+			});
+			if($passwordField.val().length === 0){
+				$passwordFieldClone.css({
+					"background-color": passwordFieldEmptyColor
 				});
-			}, 1, $passwordField, $passwordFieldClone);
-		}
+			} else { // filled already or autofilled by chrome
+				$passwordFieldClone.css({
+					"background-color": passwordFieldNonEmptyColor // light green
+				})
+				.attr("placeholder", "")
+				.val("");
+			}
+		};
+		// kinda hacky, but there is no event fired after chrome autofill
+		setTimeout(checkPasswordField, 1, $passwordField, $passwordFieldClone);
+		setTimeout(checkPasswordField, 10, $passwordField, $passwordFieldClone);
+		setTimeout(checkPasswordField, 50, $passwordField, $passwordFieldClone);
 	}
 	
 	// add tooltip
